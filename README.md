@@ -15,17 +15,17 @@
 
 正常的IP参数可以自动放行
 
-![QQ_1768965780112](https://yuy0ung.oss-cn-chengdu.aliyuncs.com/QQ_1768965780112.png)
+![QQ_1768965780112](./images/QQ_1768965780112.png)
 
 ### 2.防御状态
 
 在开启了右上角防御状态后，只要存在恶意的命令注入行为，则会触发阻断+告警机制：
-![QQ_1768966105045](https://yuy0ung.oss-cn-chengdu.aliyuncs.com/QQ_1768966105045.png)
+![QQ_1768966105045](./images/QQ_1768966105045.png)
 
 ### 3.污点传输
 
 在关闭防御机制之后，不会开启阻断，但命令注入后会显示污点流经的调用堆栈：
-![QQ_1768966223185](https://yuy0ung.oss-cn-chengdu.aliyuncs.com/QQ_1768966223185.png)
+![QQ_1768966223185](./images/QQ_1768966223185.png)
 
 ## 核心功能
 

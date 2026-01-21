@@ -64,6 +64,30 @@
 ### 2. 字节码修改 (Javassist)
 使用 **Javassist** 库在字节码层面修改 Java 类。相比 ASM，Javassist 提供了更高级的 API，可以直接编写 Java 代码片段并注入到目标方法中。
 
+**核心代码 (`ProcessBuilderHook.java`):**
+
+```java
+// 获取 ProcessBuilder 的 start 方法
+CtMethod m = cc.getDeclaredMethod("start");
+
+// 在方法体最前面插入代码 (insertBefore)
+// 作用：在真正执行命令前，先提取参数并交给 RaspProtector 进行安检
+m.insertBefore(
+    "{" +
+    "  java.util.List list = this.command;" +
+    "  if (list != null && list.size() > 0) {" +
+    "      StringBuilder sb = new StringBuilder();" +
+    "      for (int i = 0; i < list.size(); i++) {" +
+    "          sb.append((String)list.get(i)).append(\" \");" +
+    "      }" +
+    "      String fullCmd = sb.toString().trim();" +
+    // 关键点：调用 RASP 防御逻辑，如果不通过则抛出异常阻断执行
+    "      com.demo.rasp.protection.RaspProtector.checkRce(fullCmd);" +
+    "  }" +
+    "}"
+);
+```
+
 ### 3. 关键技术点与难点解决
 
 #### A. Bootstrap ClassLoader 注入
